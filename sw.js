@@ -1,12 +1,12 @@
 /* Bump CACHE version on every content update so phones pull the new file. */
-const CACHE = 'france-trip-v2';
+const CACHE = 'france-trip-v4';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-180.png',
   './icon-512.png',
-  './icon.svg'
+  './logo.png'
 ];
 
 self.addEventListener('install', (e) => {
