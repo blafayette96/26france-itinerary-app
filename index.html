@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bordeaux &amp; Provence · Sept 2026</title>
+<meta name="theme-color" content="#6E1F2A">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="France '26">
+<style>
+  :root{
+    --paper:#F2EEE4; --paper-2:#EAE5D8; --ink:#2B2621; --ink-soft:#6A625531;
+    --muted:#7A7060; --line:#D8D0C0;
+    --bdx:#6E1F2A; --gilt:#A88A3F;
+    --prv:#B5771F; --olive:#6B7346; --lav:#8A7BA0;
+    --slate:#5A6472;
+    --serif: ui-serif, "New York", Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", sans-serif;
+    --accent: var(--bdx);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--serif); font-size:17px; line-height:1.5;
+    padding-bottom:64px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px; margin:0 auto; padding:0 20px}
+
+  /* ---- Cover ---- */
+  .cover{padding:44px 20px 30px; text-align:center}
+  .cover-frame{
+    max-width:640px; margin:0 auto; border:1px solid var(--gilt);
+    box-shadow:0 0 0 4px var(--paper), 0 0 0 5px var(--gilt);
+    padding:34px 22px; background:var(--paper);
+  }
+  .eyebrow{
+    font-family:var(--sans); font-size:11px; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 14px;
+  }
+  .cover h1{
+    font-family:var(--serif); font-weight:500; font-size:34px; line-height:1.12;
+    margin:0 0 6px; letter-spacing:.5px;
+  }
+  .cover h1 .amp{font-style:italic; color:var(--bdx)}
+  .cover .dates{font-family:var(--sans); font-size:13px; color:var(--muted); margin:10px 0 0; letter-spacing:.04em}
+  .cover .sub{font-size:15px; color:var(--muted); font-style:italic; margin:16px 0 0}
+  .rule{width:40px; height:1px; background:var(--gilt); margin:18px auto}
+
+  /* ---- Sticky nav ---- */
+  nav{
+    position:sticky; top:0; z-index:20; background:rgba(242,238,228,.94);
+    backdrop-filter:saturate(140%) blur(8px); border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; gap:6px; padding:9px 12px; overflow-x:auto; -webkit-overflow-scrolling:touch}
+  nav a{
+    font-family:var(--sans); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--muted); text-decoration:none; white-space:nowrap; padding:6px 10px; border-radius:2px;
+  }
+  nav a:active{color:var(--bdx)}
+
+  /* ---- Sections ---- */
+  section{padding:30px 0 8px}
+  .sec-head{display:flex; align-items:baseline; gap:12px; margin:0 0 18px}
+  .sec-head h2{font-family:var(--serif); font-weight:500; font-size:23px; margin:0; letter-spacing:.3px}
+  .sec-head .n{font-family:var(--sans); font-size:11px; letter-spacing:.2em; color:var(--muted); text-transform:uppercase}
+
+  /* ---- Region band ---- */
+  .band{
+    margin:26px 0 14px; padding:9px 0 10px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    font-family:var(--sans); text-transform:uppercase; letter-spacing:.18em; font-size:11.5px;
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .band.bdx{color:var(--bdx)} .band.prv{color:var(--prv)}
+  .band .b-city{font-weight:600}
+  .band .b-meta{color:var(--muted); letter-spacing:.08em; font-size:11px}
+
+  /* ---- Day card ---- */
+  details.day{border-bottom:1px solid var(--line)}
+  details.day > summary{
+    list-style:none; cursor:pointer; padding:16px 4px; display:flex; align-items:flex-start; gap:12px;
+  }
+  details.day > summary::-webkit-details-marker{display:none}
+  .dot{width:9px; height:9px; border-radius:50%; margin-top:7px; flex:0 0 auto; background:var(--accent)}
+  .d-bdx .dot{background:var(--bdx)} .d-prv .dot{background:var(--prv)} .d-tr .dot{background:var(--slate)}
+  .d-main{flex:1 1 auto; min-width:0}
+  .d-date{font-family:var(--sans); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
+  .d-title{font-family:var(--serif); font-size:19px; margin:2px 0 0}
+  .d-sub{font-family:var(--sans); font-size:12.5px; color:var(--muted); margin:4px 0 0; line-height:1.45}
+  .chev{font-family:var(--sans); color:var(--gilt); font-size:20px; line-height:1; margin-top:6px; transition:transform .2s ease}
+  details.day[open] .chev{transform:rotate(90deg)}
+
+  .d-body{padding:2px 4px 22px 33px}
+  .ev{display:flex; gap:14px; padding:11px 0; border-top:1px dotted var(--line)}
+  .ev:first-child{border-top:none}
+  .t{font-family:var(--sans); font-size:11.5px; color:var(--muted); flex:0 0 62px; letter-spacing:.03em; padding-top:2px}
+  .ec{flex:1 1 auto; min-width:0}
+  .et{font-family:var(--serif); font-size:16px; margin:0}
+  .ed{font-family:var(--sans); font-size:13.5px; color:#5c5347; margin:4px 0 0; line-height:1.5}
+  .ed a.dir{color:var(--bdx); text-decoration:none; border-bottom:1px solid var(--ink-soft); font-weight:500}
+  .d-prv .ed a.dir{color:var(--prv)}
+
+  .tag{font-family:var(--sans); font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    padding:2px 7px; border-radius:2px; margin-left:7px; vertical-align:middle; white-space:nowrap}
+  .t-incl{background:#e6ecdf; color:#4f5c37}
+  .t-half{background:#e9e2d2; color:#7a6a45}
+  .t-extra{background:#f0e0e0; color:#8a3b3b}
+  .t-wine{background:#f2e6e8; color:var(--bdx)}
+  .t-log{background:#e5e8ec; color:var(--slate)}
+  .t-warn{background:#fbeecf; color:#9a6b12}
+  .t-shop{background:#efe8ef; color:#6f5a7a}
+
+  .primer{margin:10px 0 2px}
+  .primer > summary{list-style:none; cursor:pointer; font-family:var(--sans); font-size:11.5px;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--gilt); padding:4px 0}
+  .primer > summary::-webkit-details-marker{display:none}
+  .primer > summary::before{content:"§ "; color:var(--gilt)}
+  .primer .p-body{font-family:var(--serif); font-size:15px; line-height:1.62; color:#463f36;
+    border-left:2px solid var(--gilt); padding:2px 0 2px 14px; margin:6px 0 4px}
+  .primer .more{display:inline-block; margin-top:8px; font-family:var(--sans); font-size:12px;
+    color:var(--bdx); text-decoration:none; border-bottom:1px solid var(--ink-soft)}
+
+  /* ---- Checklist ---- */
+  .check{list-style:none; padding:0; margin:0}
+  .check li{display:flex; gap:12px; align-items:flex-start; padding:12px 2px; border-bottom:1px solid var(--line)}
+  .check input{appearance:none; -webkit-appearance:none; width:20px; height:20px; flex:0 0 auto; margin-top:1px;
+    border:1.5px solid var(--gilt); border-radius:3px; background:var(--paper); cursor:pointer; position:relative}
+  .check input:checked{background:var(--bdx); border-color:var(--bdx)}
+  .check input:checked::after{content:"✓"; color:var(--paper); position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center; font-size:13px; font-family:var(--sans)}
+  .check label{font-family:var(--sans); font-size:14px; line-height:1.5; color:var(--ink); flex:1}
+  .check li.done label{color:var(--muted); text-decoration:line-through}
+  .check .cwarn{color:#9a6b12; font-size:11px; text-transform:uppercase; letter-spacing:.08em; display:block; margin-top:2px}
+  .grp-label{font-family:var(--sans); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:0 0 6px}
+
+  /* ---- Info ---- */
+  .info-grid{display:grid; gap:16px}
+  .info-card{border:1px solid var(--line); padding:16px 16px 14px; background:var(--paper)}
+  .info-card h3{font-family:var(--sans); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 10px}
+  .info-row{font-family:var(--sans); font-size:13.5px; line-height:1.5; padding:5px 0; border-top:1px dotted var(--line)}
+  .info-row:first-of-type{border-top:none}
+  .info-row .k{color:var(--muted)}
+  .info-row .v{color:var(--ink)}
+  .call{display:inline-block; margin-top:8px; font-family:var(--sans); font-size:15px; font-weight:600;
+    color:var(--bdx); text-decoration:none; border:1px solid var(--bdx); padding:9px 14px; border-radius:3px}
+
+  .foot{font-family:var(--sans); font-size:12px; color:var(--muted); text-align:center;
+    padding:30px 20px 10px; line-height:1.6}
+  .foot .rule{margin:0 auto 16px}
+
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--gilt); outline-offset:2px}
+  @media (prefers-reduced-motion: reduce){*{transition:none !important}}
+  @media (min-width:600px){ .cover h1{font-size:40px} }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-frame">
+    <div style="margin:0 auto 12px; line-height:0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="64" height="64" aria-hidden="true"><g transform="translate(70,78) scale(1.15)"><path d="M30,34 C44,14 46,-10 40,-34" fill="none" stroke="#6B7346" stroke-width="2.6" stroke-linecap="round"/><path d="M42,4 q10,-3 13,-11 q-11,2 -13,11 z" fill="#6B7346" opacity="0.9"/><circle cx="35.4" cy="-20.2" r="4.6" fill="#8A7BA0"/><circle cx="40.7" cy="-23.3" r="4.4" fill="#8A7BA0"/><circle cx="36.1" cy="-27.2" r="4.2" fill="#8A7BA0"/><circle cx="41.1" cy="-30.3" r="4.0" fill="#8A7BA0"/><circle cx="36.8" cy="-34.2" r="3.8" fill="#8A7BA0"/><circle cx="41.4" cy="-37.3" r="3.6" fill="#8A7BA0"/><circle cx="37.5" cy="-41.1" r="3.5" fill="#8A7BA0"/><circle cx="41.7" cy="-44.4" r="3.3" fill="#8A7BA0"/><circle cx="38.2" cy="-48.1" r="3.1" fill="#8A7BA0"/><path d="M-30,34 C-44,14 -46,-10 -40,-34" fill="none" stroke="#6B7346" stroke-width="2.6" stroke-linecap="round"/><path d="M-42,4 q-10,-3 -13,-11 q11,2 13,11 z" fill="#6B7346" opacity="0.9"/><circle cx="-40.6" cy="-19.8" r="4.6" fill="#8A7BA0"/><circle cx="-35.8" cy="-23.7" r="4.4" fill="#8A7BA0"/><circle cx="-40.9" cy="-26.8" r="4.2" fill="#8A7BA0"/><circle cx="-36.4" cy="-30.7" r="4.0" fill="#8A7BA0"/><circle cx="-41.2" cy="-33.8" r="3.8" fill="#8A7BA0"/><circle cx="-37.1" cy="-37.7" r="3.6" fill="#8A7BA0"/><circle cx="-41.5" cy="-40.9" r="3.5" fill="#8A7BA0"/><circle cx="-37.8" cy="-44.6" r="3.3" fill="#8A7BA0"/><circle cx="-41.8" cy="-47.9" r="3.1" fill="#8A7BA0"/><g fill="#6E1F2A"><path d="M0,0 C11,-15 11,-36 0,-50 C-11,-36 -11,-15 0,0 Z" transform="translate(0,-6)"/><path d="M0,0 C11,-15 11,-36 0,-50 C-11,-36 -11,-15 0,0 Z" transform="translate(0,-6) rotate(-52)"/><path d="M0,0 C11,-15 11,-36 0,-50 C-11,-36 -11,-15 0,0 Z" transform="translate(0,-6) rotate(52)"/><rect x="-20" y="-2" width="40" height="10" rx="5"/><path d="M0,6 C6,16 6,28 0,34 C-6,28 -6,16 0,6 Z"/><rect x="-16" y="32" width="32" height="7" rx="3.5"/></g></g></svg></div>
+    <p class="eyebrow">A Carnet de Voyage</p>
+    <h1>Bordeaux <span class="amp">&amp;</span> Provence</h1>
+    <div class="rule"></div>
+    <p class="dates">4 – 12 SEPTEMBER 2026 · NINE NIGHTS</p>
+    <p class="sub">Blake &amp; Sam — wine, villages, and a great deal of ceramics</p>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav><div class="wrap">
+  <a href="#days">Days</a>
+  <a href="#notes">Notes</a>
+  <a href="#checklist">To&nbsp;Do</a>
+  <a href="#info">Logistics</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- DAYS -->
+<section id="days">
+  <div class="sec-head"><span class="n">I</span><h2>The Days</h2></div>
+
+  <!-- ===== BORDEAUX ===== -->
+  <div class="band bdx"><span class="b-city">Bordeaux</span><span class="b-meta">Sep 4–8 · Les Sources de Caudalie</span></div>
+
+  <!-- Sep 4 -->
+  <details class="day d-tr">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Fri · Sep 4 · Arrival</span>
+      <div class="d-title">Wheels down, first pour</div>
+      <div class="d-sub">CDG → Bordeaux · check-in ~4pm · ROUGE bar · La Table du Lavoir</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">10:25a</span><div class="ec"><p class="et">Land Paris CDG <span class="tag t-log">flight</span></p><p class="ed">UA990 from SFO.</p></div></div>
+      <div class="ev"><span class="t">1:25p</span><div class="ec"><p class="et">CDG → Bordeaux <span class="tag t-log">flight</span></p><p class="ed">AF9424, operated by HOP!</p></div></div>
+      <div class="ev"><span class="t">on arrival</span><div class="ec"><p class="et">Pick up the Sixt <span class="tag t-log">car</span></p><p class="ed">Res# 9734177436 · Mercedes E-Class · €500 deposit at the counter. Grab it whenever you land — you built cushion into the reservation window. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Bordeaux+Airport+BOD" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">~4:00p</span><div class="ec"><p class="et">Check in — Les Sources de Caudalie</p><p class="ed">On the Smith Haut Lafitte estate, Pessac-Léognan. Walk the vines and settle in. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Les+Sources+de+Caudalie+Martillac" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">~5:30p</span><div class="ec"><p class="et">ROUGE wine bar <span class="tag t-wine">wine</span> <span class="tag t-extra">extra</span></p><p class="ed">Order the Smith Haut Lafitte white by the glass — Sam's first white Bordeaux. Crisp and mineral like a Sancerre, but rounder. Sets the baseline for Monday's tasting.</p></div></div>
+      <div class="ev"><span class="t">7:30p</span><div class="ec"><p class="et">Dinner — La Table du Lavoir <span class="tag t-half">half board</span></p><p class="ed">Casual on-property bistro, daily market menu.</p></div></div>
+    </div>
+  </details>
+
+  <!-- Sep 5 -->
+  <details class="day d-bdx">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Sat · Sep 5 · Pessac-Léognan</span>
+      <div class="d-title">Whites, up close</div>
+      <div class="d-sub">Guided tour · Smith Haut Lafitte + Domaine de Chevalier · La Grand'Vigne</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">morning</span><div class="ec"><p class="et">Workout + breakfast <span class="tag t-log">routine</span></p><p class="ed">Run the vineyard roads before the day starts.</p></div></div>
+      <div class="ev"><span class="t">late a.m.</span><div class="ec"><p class="et">Pessac-Léognan tour — with guide <span class="tag t-wine">wine</span></p><p class="ed">Two estates + lunch: Smith Haut Lafitte, then Domaine de Chevalier. Focus is on the whites. <span style="color:#7A7060">Final timing &amp; cost pending the travel agent.</span></p>
+        <details class="primer"><summary>Primer — why these whites</summary><div class="p-body">Bordeaux is famous for reds, but the dry whites of Pessac-Léognan are its quiet flex — Sauvignon Blanc for zip, Sémillon for weight, usually barrel-fermented so a faint toast sits under the citrus. Smith Haut Lafitte's white is the benchmark: mineral and precise like a Sancerre, but layered and rounder. Taste it against Domaine de Chevalier's and you'll feel the house-to-house difference that makes Bordeaux worth studying. For Sam, who leans mineral whites, this is the region speaking her language.<a class="more" href="https://www.google.com/search?q=Pessac-L%C3%A9ognan+white+wine+Sauvignon+S%C3%A9millon" target="_blank" rel="noopener">Read more ↗</a></div></details>
+      </div></div>
+      <div class="ev"><span class="t">7:30p</span><div class="ec"><p class="et">Dinner — La Grand'Vigne <span class="tag t-extra">extra</span> <span class="tag t-wine">2★</span></p><p class="ed">Two Michelin stars, on the estate. Not covered by half board — worth the splurge.</p></div></div>
+    </div>
+  </details>
+
+  <!-- Sep 6 -->
+  <details class="day d-bdx">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Sun · Sep 6 · Bordeaux city</span>
+      <div class="d-title">Flea market &amp; the city</div>
+      <div class="d-sub">Puces de Saint-Michel · Cité du Vin · Chartrons · La Table du Lavoir</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">morning</span><div class="ec"><p class="et">Workout + breakfast <span class="tag t-log">routine</span></p></div></div>
+      <div class="ev"><span class="t">~10a</span><div class="ec"><p class="et">Puces de Saint-Michel <span class="tag t-shop">brocante</span></p><p class="ed">Sunday flea market — Sam's morning. Silver, glassware, curiosities. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Puces+de+Saint-Michel+Bordeaux" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">midday</span><div class="ec"><p class="et">Lunch in Bordeaux <span class="tag t-warn">check hours</span></p><p class="ed">⚠️ Many Bordeaux spots close Sundays — confirm ahead or keep a backup in mind.</p></div></div>
+      <div class="ev"><span class="t">afternoon</span><div class="ec"><p class="et">Cité du Vin + Chartrons galleries <span class="tag t-wine">culture</span></p><p class="ed">The wine museum, then the antiques-and-art quarter. Optional Saint-Émilion detour if you've got the energy. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Cit%C3%A9+du+Vin+Bordeaux" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">7:30p</span><div class="ec"><p class="et">Dinner — La Table du Lavoir <span class="tag t-half">half board</span></p></div></div>
+    </div>
+  </details>
+
+  <!-- Sep 7 -->
+  <details class="day d-bdx">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Mon · Sep 7 · Médoc</span>
+      <div class="d-title">Classified growths</div>
+      <div class="d-sub">Guided tour · Lynch-Bages + Cos d'Estournel · 9:30a sharp · La Table du Lavoir</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">~8:00a</span><div class="ec"><p class="et">Workout + breakfast <span class="tag t-log">routine</span></p><p class="ed">Early — the guide leaves at 9:30 sharp.</p></div></div>
+      <div class="ev"><span class="t">9:30a</span><div class="ec"><p class="et">Médoc tour departs — with guide <span class="tag t-wine">wine</span></p><p class="ed">Two estates + lunch: Lynch-Bages, then Cos d'Estournel. At Lynch-Bages, ask about a back-vintage pour (2015 or 2016, ~€60–120 extra) — your "aged Caymus" moment.</p>
+        <details class="primer"><summary>Primer — the Médoc &amp; the back-vintage pour</summary><div class="p-body">The Médoc is Cabernet Sauvignon country — deep gravel banks that drain hard and ripen the grape fully, giving structured, cellar-worthy reds. Lynch-Bages is a Pauillac fifth-growth that has long overdelivered for its rank, which is exactly why an older, resolved bottle is the closest thing to the aged Caymus you both love. Cos d'Estournel next door earns the stop for the wine and the theater: a 19th-century château topped with pagodas, built by a merchant obsessed with the East. Two estates, one lunch, and the classified-growth system starts to make sense in the glass.<a class="more" href="https://www.google.com/search?q=Lynch-Bages+Pauillac+M%C3%A9doc+classified+growth" target="_blank" rel="noopener">Read more ↗</a></div></details>
+      </div></div>
+      <div class="ev"><span class="t">7:30p</span><div class="ec"><p class="et">Dinner — La Table du Lavoir <span class="tag t-half">half board</span></p></div></div>
+    </div>
+  </details>
+
+  <!-- ===== PROVENCE ===== -->
+  <div class="band prv"><span class="b-city">Provence</span><span class="b-meta">Sep 8–12 · Airelles Gordes</span></div>
+
+  <!-- Sep 8 -->
+  <details class="day d-tr">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Tue · Sep 8 · Transit</span>
+      <div class="d-title">West to the Luberon</div>
+      <div class="d-sub">Bordeaux → Marseille · Maison Empereur · drive to Gordes · Clover Gordes</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">morning</span><div class="ec"><p class="et">Return the Bordeaux Sixt <span class="tag t-log">car</span></p><p class="ed">At BOD, before the flight. Res# 9734177436.</p></div></div>
+      <div class="ev"><span class="t">—</span><div class="ec"><p class="et">Bordeaux → Marseille <span class="tag t-log">flight</span></p><p class="ed">Via Lyon · confirmation AVGY5S.</p></div></div>
+      <div class="ev"><span class="t">on arrival</span><div class="ec"><p class="et">Pick up the Marseille Sixt <span class="tag t-log">car</span></p><p class="ed">Res# 9734177720 · Mercedes E-Class · €500 deposit. Same as Bordeaux — pick up when you land. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Marseille+Provence+Airport" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">~2.5 hrs</span><div class="ec"><p class="et">Maison Empereur, Marseille <span class="tag t-shop">for Sam</span></p><p class="ed">France's oldest hardware-and-household store — a rabbit hole of enamelware, linens, and kitchen things. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Maison+Empereur+Marseille" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">afternoon</span><div class="ec"><p class="et">Drive to Gordes <span class="tag t-log">scenic</span></p><p class="ed">Take the D900 up into the Luberon. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Airelles+Gordes+La+Bastide" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">7:30p</span><div class="ec"><p class="et">Dinner — Clover Gordes <span class="tag t-incl">all-incl</span></p><p class="ed">By Jean-François Piège, on a panoramic terrace.</p></div></div>
+    </div>
+  </details>
+
+  <!-- Sep 9 -->
+  <details class="day d-prv">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Wed · Sep 9 · The villages</span>
+      <div class="d-title">Gordes, Sénanque &amp; ochre</div>
+      <div class="d-sub">Sénanque Abbey · village walk · Roussillon · La Bastide de Pierres</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">morning</span><div class="ec"><p class="et">Workout + breakfast <span class="tag t-log">routine</span></p></div></div>
+      <div class="ev"><span class="t">—</span><div class="ec"><p class="et">Sénanque Abbey <span class="tag t-wine">culture</span></p><p class="ed">12th-century Cistercian abbey — bare stone, lavender rows out front. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Abbaye+de+S%C3%A9nanque" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">—</span><div class="ec"><p class="et">Gordes village walk <span class="tag t-wine">culture</span></p><p class="ed">The archetypal perched village, stacked in pale limestone.</p></div></div>
+      <div class="ev"><span class="t">—</span><div class="ec"><p class="et">Roussillon <span class="tag t-wine">culture</span></p><p class="ed">The whole village built from ochre — butter-yellow to blood-orange, quarried from the cliffs beside it. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Roussillon+Vaucluse+ochre" target="_blank" rel="noopener">Directions ↗</a></p>
+        <details class="primer"><summary>Primer — Gordes, Sénanque &amp; the ochre country</summary><div class="p-body">Gordes stacks up its hillside in pale limestone — the postcard Provençal village. Just below, the 12th-century Sénanque Abbey is a lesson in Cistercian restraint: no ornament, all proportion, lavender out front (past peak by September, but still the classic frame). Roussillon is the opposite key entirely — an entire village built in ochre, the pigment quarried right beside it. Short drives, big contrast: austerity, then saturated color.<a class="more" href="https://www.google.com/search?q=S%C3%A9nanque+Abbey+Roussillon+ochre+Provence" target="_blank" rel="noopener">Read more ↗</a></div></details>
+      </div></div>
+      <div class="ev"><span class="t">optional</span><div class="ec"><p class="et">Spa afternoon <span class="tag t-shop">spa</span></p><p class="ed">Airelles Spa by Guerlain — book ahead if you want it.</p></div></div>
+      <div class="ev"><span class="t">7:30p</span><div class="ec"><p class="et">Dinner — La Bastide de Pierres <span class="tag t-incl">all-incl</span></p><p class="ed">Village trattoria since 1820, reimagined by Airelles.</p></div></div>
+    </div>
+  </details>
+
+  <!-- Sep 10 -->
+  <details class="day d-prv">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Thu · Sep 10 · Aix-en-Provence</span>
+      <div class="d-title">Cooking class in Aix</div>
+      <div class="d-sub">Aix market · group class 11a–3p · explore Aix · Le Beefbar</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">early</span><div class="ec"><p class="et">Workout + breakfast <span class="tag t-log">routine</span></p><p class="ed">Early start — market before the class.</p></div></div>
+      <div class="ev"><span class="t">~9:00a</span><div class="ec"><p class="et">Drive to Aix <span class="tag t-log">~50 min</span></p><p class="ed">Transport isn't included in the class price. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Aix-en-Provence" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">~10:00a</span><div class="ec"><p class="et">Aix morning market <span class="tag t-shop">for Sam</span></p><p class="ed">Thursday is a market day in Aix — produce, flowers, and brocante stalls through the old town. A wander before class. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Aix-en-Provence+market+Place+des+Pr%C3%AAcheurs" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">11a–3p</span><div class="ec"><p class="et">Group cooking class <span class="tag t-incl">confirmed</span></p><p class="ed">Group format (€440 per person). Final logistics pending the travel agent.</p></div></div>
+      <div class="ev"><span class="t">afternoon</span><div class="ec"><p class="et">Explore Aix <span class="tag t-shop">for Sam</span></p><p class="ed">Boutiques and jewelry in the old town before heading back.</p></div></div>
+      <div class="ev"><span class="t">7:30p</span><div class="ec"><p class="et">Dinner — Le Beefbar <span class="tag t-incl">all-incl</span></p><p class="ed">Perched on the heights of Gordes, valley views.</p></div></div>
+    </div>
+  </details>
+
+  <!-- Sep 11 -->
+  <details class="day d-prv">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Fri · Sep 11 · Isle-sur-la-Sorgue</span>
+      <div class="d-title">Sam's big day — the brocante</div>
+      <div class="d-sub">Fontaine-de-Vaucluse · antiques &amp; faïence · La Prévôté · spa · La Table de la Bastide</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">morning</span><div class="ec"><p class="et">Workout + breakfast <span class="tag t-log">routine</span></p></div></div>
+      <div class="ev"><span class="t">—</span><div class="ec"><p class="et">Fontaine-de-Vaucluse <span class="tag t-wine">culture</span></p><p class="ed">The spring that feeds the Sorgue — a quick, pretty stop on the way. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=Fontaine-de-Vaucluse" target="_blank" rel="noopener">Directions ↗</a></p></div></div>
+      <div class="ev"><span class="t">late a.m.</span><div class="ec"><p class="et">Isle-sur-la-Sorgue brocante <span class="tag t-shop">brocante</span></p><p class="ed">300+ dealers along the canals. La Cour aux Antiquaires is the priority; then wander the Village des Antiquaires. This is the ceramics day. <a class="dir" href="https://www.google.com/maps/search/?api=1&amp;query=L%27Isle-sur-la-Sorgue+antiques" target="_blank" rel="noopener">Directions ↗</a></p>
+        <details class="primer"><summary>Primer — shopping the brocante &amp; faïence</summary><div class="p-body">Isle-sur-la-Sorgue is one of Europe's great antiques towns — 300+ permanent dealers, open Friday through Monday. For the hand-painted ceramics Sam wants — the Moustiers / Positano look, white ground with botanical and floral motifs — you'll find antique faïence here. If she'd rather buy new and ship home, the Moustiers ateliers (Atelier Soleil, Faïence Bondil) match the style exactly and ship to the US, so nothing has to fit in a suitcase. Buy by eye, not by list — that's how she shops anyway.<a class="more" href="https://www.google.com/search?q=Isle-sur-la-Sorgue+antiques+Moustiers+fa%C3%AFence+ceramics" target="_blank" rel="noopener">Read more ↗</a></div></details>
+      </div></div>
+      <div class="ev"><span class="t">~1:00p</span><div class="ec"><p class="et">Lunch — La Prévôté <span class="tag t-warn">book direct</span></p><p class="ed">In Isle-sur-la-Sorgue. Reserve ahead.</p></div></div>
+      <div class="ev"><span class="t">2:30–5:30p</span><div class="ec"><p class="et">Spa — Airelles by Guerlain <span class="tag t-shop">spa</span></p><p class="ed">Book this one early; Friday fills up.</p></div></div>
+      <div class="ev"><span class="t">7:30p</span><div class="ec"><p class="et">Dinner — La Table de la Bastide <span class="tag t-incl">all-incl</span></p></div></div>
+    </div>
+  </details>
+
+  <!-- Sep 12 -->
+  <details class="day d-tr">
+    <summary><span class="dot"></span><span class="d-main">
+      <span class="d-date">Sat · Sep 12 · Departure</span>
+      <div class="d-title">Home via London</div>
+      <div class="d-sub">Return Sixt · BA Marseille → LHR → JFK, 1:25p</div>
+    </span><span class="chev">›</span></summary>
+    <div class="d-body">
+      <div class="ev"><span class="t">morning</span><div class="ec"><p class="et">Breakfast &amp; pack</p></div></div>
+      <div class="ev"><span class="t">late a.m.</span><div class="ec"><p class="et">Return the Marseille Sixt <span class="tag t-log">car</span></p><p class="ed">Res# 9734177720, at MRS.</p></div></div>
+      <div class="ev"><span class="t">1:25p</span><div class="ec"><p class="et">BA — Marseille → LHR → JFK <span class="tag t-log">flight</span></p><p class="ed">You in business (expensed via Navan); Sam in Economy Flex.</p></div></div>
+      <div class="ev"><span class="t">note</span><div class="ec"><p class="et">Apt Saturday market — skipped <span class="tag t-warn">too tight</span></p><p class="ed">The 1:25p departure doesn't leave room. Left off on purpose.</p></div></div>
+    </div>
+  </details>
+</section>
+
+<!-- NOTES -->
+<section id="notes">
+  <div class="sec-head"><span class="n">II</span><h2>Notes for the road</h2></div>
+  <div class="info-card">
+    <p style="font-family:var(--sans); font-size:13.5px; color:#5c5347; line-height:1.6; margin:0">
+      The primers live inside each day (look for the <span style="color:var(--gilt)">§</span> markers) so they're there when you need them.
+      A short reading order if you want it: <strong>Pessac-Léognan whites</strong> (Sat), the <strong>Médoc back-vintage pour</strong> (Mon), the <strong>ochre country</strong> (Wed), and <strong>the brocante &amp; faïence</strong> (Fri).
+    </p>
+    <p style="font-family:var(--sans); font-size:12.5px; color:var(--muted); line-height:1.6; margin:12px 0 0; border-top:1px dotted var(--line); padding-top:12px">
+      Want more on any of it — a producer, a vintage, a village? Blake can ask Claude to expand any note into a full deep-dive.
+    </p>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <div class="sec-head"><span class="n">III</span><h2>Before we go</h2></div>
+  <p class="grp-label">On you</p>
+  <ul class="check">
+    <li><input type="checkbox" id="d1"><label for="d1">Buy Carrières de Lumières tickets <span class="cwarn">before departure</span></label></li>
+    <li><input type="checkbox" id="d2"><label for="d2">Reserve La Prévôté for Friday lunch</label></li>
+    <li><input type="checkbox" id="d3"><label for="d3">Book the spa — especially Friday 2:30–5:30p</label></li>
+    <li><input type="checkbox" id="d4"><label for="d4">Confirm a Sunday-open lunch spot in Bordeaux (Sep 6)</label></li>
+  </ul>
+  <p class="grp-label" style="margin-top:22px">With the travel agent</p>
+  <ul class="check">
+    <li><input type="checkbox" id="d5"><label for="d5">Final wine-day itineraries — guide, timing, cost, incl. Smith Haut Lafitte tasting (Sat &amp; Mon)</label></li>
+    <li><input type="checkbox" id="d6"><label for="d6">Final Aix cooking-class logistics — transport &amp; timing (Thu)</label></li>
+  </ul>
+  <p style="font-family:var(--sans); font-size:11.5px; color:var(--muted); margin:14px 2px 0">Checkmarks save on this phone. PlusPoints &amp; the Sep 9/10 order are done. ✓</p>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <div class="sec-head"><span class="n">IV</span><h2>Logistics</h2></div>
+  <div class="info-grid">
+
+    <div class="info-card">
+      <h3>Hotels</h3>
+      <div class="info-row"><span class="v">Les Sources de Caudalie</span><br><span class="k">Sep 4–8 · Bordeaux · half board</span></div>
+      <div class="info-row"><span class="v">Airelles Gordes</span><br><span class="k">Sep 8–12 · Provence · all-inclusive (all 4 restaurants)</span></div>
+    </div>
+
+    <div class="info-card">
+      <h3>Flights</h3>
+      <div class="info-row"><span class="k">Sep 3</span> · <span class="v">UA990 SFO → CDG</span> · Premium Plus</div>
+      <div class="info-row"><span class="k">Sep 4</span> · <span class="v">AF9424 CDG → BOD</span></div>
+      <div class="info-row"><span class="k">Sep 8</span> · <span class="v">BOD → MRS</span> · conf. AVGY5S</div>
+      <div class="info-row"><span class="k">Sep 12</span> · <span class="v">BA MRS → LHR → JFK</span> · 1:25p</div>
+    </div>
+
+    <div class="info-card">
+      <h3>Rental Cars — Sixt</h3>
+      <div class="info-row"><span class="v">Bordeaux · Res# 9734177436</span><br><span class="k">Pick up Sep 4 · return Sep 8 · Mercedes E-Class · €500 deposit</span></div>
+      <div class="info-row"><span class="v">Marseille · Res# 9734177720</span><br><span class="k">Pick up Sep 8 · return Sep 12 · Mercedes E-Class · €500 deposit</span></div>
+    </div>
+
+    <div class="info-card">
+      <h3>Travel Agent — Deluxe France</h3>
+      <div class="info-row"><span class="k">24/7 emergency line</span></div>
+      <a class="call" href="tel:+33972301031">Call +33 9 72 30 10 31</a>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="rule"></div>
+  Bordeaux &amp; Provence · September 2026<br>
+  Blake &amp; Sam
+</footer>
+
+<script>
+  // Persist checklist per-device (works once deployed to a real https:// site)
+  (function(){
+    try{
+      var boxes = document.querySelectorAll('.check input[type=checkbox]');
+      boxes.forEach(function(b){
+        var key = 'chk_' + b.id;
+        if(localStorage.getItem(key) === '1'){ b.checked = true; b.closest('li').classList.add('done'); }
+        b.addEventListener('change', function(){
+          b.closest('li').classList.toggle('done', b.checked);
+          try{ localStorage.setItem(key, b.checked ? '1' : '0'); }catch(e){}
+        });
+      });
+    }catch(e){}
+  })();
+
+  // Smooth scroll for the nav
+  document.querySelectorAll('nav a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var el = document.querySelector(a.getAttribute('href'));
+      if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  // Register the service worker so the app opens offline
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+    });
+  }
+</script>
+</body>
+</html>
