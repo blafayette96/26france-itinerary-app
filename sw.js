@@ -1,5 +1,5 @@
 /* Bump CACHE version on every content update so phones pull the new file. */
-const CACHE = 'france-trip-v4';
+const CACHE = 'france-trip-v6';
 const ASSETS = [
   './',
   './index.html',
